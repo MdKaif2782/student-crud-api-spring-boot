@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,7 @@ public class StudentController {
 
     @PostMapping
     public void addStudent(@RequestBody Student student) {
+        student.setAge(Period.between(student.getDob(), LocalDate.now()).getYears());
          studentService.addStudent(student);
     }
 }
