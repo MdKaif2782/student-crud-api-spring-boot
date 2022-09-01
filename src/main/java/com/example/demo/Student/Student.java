@@ -1,9 +1,24 @@
 package com.example.demo.Student;
 
+import javax.persistence.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 
+import static java.time.LocalTime.now;
+import static java.util.Calendar.getInstance;
+
+@Entity
+@Table
 public class Student {
+    @Id
+    @SequenceGenerator(name = "student_seq", sequenceName = "student_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
+    private Long id;
     private String name;
+    @Transient
     private int age;
     private String phone;
     private String email;
@@ -11,19 +26,19 @@ public class Student {
     private String fee;
     private LocalDate dob;
 
+
     public Student() {
 
     }
 
-    public Student(String name,
-                   int age,
+    public Student(long id,String name,
                    String phone,
                    String email,
                    String course,
                    String fee,
                    LocalDate dob) {
+        this.id= id;
         this.name = name;
-        this.age = age;
         this.phone = phone;
         this.email = email;
         this.course = course;
@@ -40,7 +55,8 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
+
+        return Period.between(dob, LocalDate.now()).getYears();
     }
 
     public void setAge(int age) {
@@ -85,5 +101,14 @@ public class Student {
 
     public void setDob(LocalDate dob) {
         this.dob = dob;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    public Long getId() {
+        return id;
     }
 }
