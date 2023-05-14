@@ -22,6 +22,12 @@ dependencies {
 	//HikariCP
 	implementation 'com.zaxxer:HikariCP:5.0.1'
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.example.demo.MyMainClass'
+    }
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
